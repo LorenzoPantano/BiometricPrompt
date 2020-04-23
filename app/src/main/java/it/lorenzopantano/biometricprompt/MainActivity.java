@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Controlla se il dispositivo ha accesso ai sensori
+
         biometricManager = BiometricManager.from(this);
         switch (biometricManager.canAuthenticate()) {
             case BiometricManager.BIOMETRIC_SUCCESS:
@@ -42,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         if (biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS) {
-            //Creates an executor on a different thread
+
+            //Crea l'executor sullo stesso thread
             Executor executor = new Executor() {
                 @Override
                 public void execute(Runnable command) {
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             };
 
-            //Create and implement the methods of the abstract class AuthenticationCallback
+            //Crea e implementa la classe authenticationCallback
             BiometricPrompt.AuthenticationCallback authenticationCallback = new BiometricPrompt.AuthenticationCallback() {
                 @Override
                 public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
@@ -71,10 +75,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             };
 
-            //Instaciate the biometric prompt
+            //Istanzia biometricPrompt con i parametri executor e authenticationCallback
             biometricPrompt = new BiometricPrompt(this, executor, authenticationCallback);
 
-            //Create the dialog to be shown on the screen
+            //Crea il dialog per l'autenticazione
             promptInfo = new BiometricPrompt.PromptInfo.Builder()
                     .setTitle("Authentication Required")
                     .setSubtitle("Log in")
@@ -82,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .setDeviceCredentialAllowed(true)
                     .build();
 
-            //Set up the button LOGIN and his onClickListener
+            //Bottone login al centro dello schermo
             Button btnLogin = findViewById(R.id.btnLogin);
             btnLogin.setOnClickListener(this);
 
