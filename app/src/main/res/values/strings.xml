@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Biometric Prompt</string>
+    <string name="login">LOGIN</string>
+</resources>
